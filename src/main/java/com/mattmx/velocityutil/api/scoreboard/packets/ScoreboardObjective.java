@@ -11,17 +11,15 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.Locale;
 
 import static dev.simplix.protocolize.api.util.ProtocolVersions.MINECRAFT_1_17_1;
 import static dev.simplix.protocolize.api.util.ProtocolVersions.MINECRAFT_LATEST;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Accessors(fluent = true)
 public class ScoreboardObjective extends AbstractPacket {
 
     public static final List<ProtocolIdMapping> MAPPINGS = List.of(
@@ -70,11 +68,11 @@ public class ScoreboardObjective extends AbstractPacket {
 
         @Override
         public String toString() {
-            return super.toString().toLowerCase();
+            return super.toString().toLowerCase(Locale.ROOT);
         }
 
         public static HealthDisplay fromString(String s) {
-            return valueOf(s.toUpperCase());
+            return valueOf(s.toUpperCase(Locale.ROOT));
         }
     }
 }

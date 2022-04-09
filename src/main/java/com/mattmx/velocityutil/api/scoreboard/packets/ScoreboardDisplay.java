@@ -14,13 +14,10 @@ import java.util.List;
 import static dev.simplix.protocolize.api.util.ProtocolVersions.MINECRAFT_1_17_1;
 import static dev.simplix.protocolize.api.util.ProtocolVersions.MINECRAFT_LATEST;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Accessors(fluent = true)
 public class ScoreboardDisplay extends AbstractPacket {
 
     public static final List<ProtocolIdMapping> MAPPINGS = List.of(
