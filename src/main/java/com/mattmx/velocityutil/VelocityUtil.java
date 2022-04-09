@@ -3,7 +3,12 @@ package com.mattmx.velocityutil;
 import com.google.inject.Inject;
 import com.mattmx.velocityutil.api.commands.VelocityCommands;
 import com.mattmx.velocityutil.api.general.VelocityPlugin;
-import com.mattmx.velocityutil.api.scoreboard.packets.ScoreboardPacket;
+import com.mattmx.velocityutil.api._scoreboard.ScoreboardManager;
+import com.mattmx.velocityutil.api._scoreboard.packets.ScoreboardObjectivePacket;
+import com.mattmx.velocityutil.api._scoreboard.packets.DisplayScoreboardPacket;
+import com.mattmx.velocityutil.api.scoreboard.packets.ScoreboardDisplay;
+import com.mattmx.velocityutil.api.scoreboard.packets.ScoreboardObjective;
+import com.mattmx.velocityutil.api.scoreboard.packets.ScoreboardScore;
 import com.mattmx.velocityutil.examples.commands.ExampleCommand;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
@@ -25,6 +30,8 @@ import org.slf4j.Logger;
 public class VelocityUtil extends VelocityPlugin {
     static VelocityUtil instance;
 
+    private ScoreboardManager scoreboardManager = new ScoreboardManager();
+
     @Inject
     public VelocityUtil(ProxyServer server, Logger logger) {
         super(server, logger, "velocityutil");
@@ -34,7 +41,13 @@ public class VelocityUtil extends VelocityPlugin {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         VelocityCommands.register(this, new ExampleCommand());
-        Protocolize.protocolRegistration().registerPacket(ScoreboardPacket.MAPPINGS, Protocol.PLAY, PacketDirection.CLIENTBOUND, ScoreboardPacket.class);
+        Protocolize.protocolRegistration().registerPacket(ScoreboardObjective.MAPPINGS, Protocol.PLAY, PacketDirection.CLIENTBOUND, ScoreboardObjective.class);
+        Protocolize.protocolRegistration().registerPacket(ScoreboardScore.MAPPINGS, Protocol.PLAY, PacketDirection.CLIENTBOUND, ScoreboardScore.class);
+        Protocolize.protocolRegistration().registerPacket(ScoreboardDisplay.MAPPINGS, Protocol.PLAY, PacketDirection.CLIENTBOUND, ScoreboardDisplay.class);
+    }
+
+    public static ScoreboardManager getScoreboardManager() {
+        return instance.scoreboardManager;
     }
 
     public static VelocityUtil get() {
